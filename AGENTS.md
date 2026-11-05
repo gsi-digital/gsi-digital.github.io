@@ -14,6 +14,8 @@ GitHub Pages (`gsi-digital.github.io`), Deploy über `.github/workflows/deploy.y
 
 ## Regeln
 
+- Link-Vorschaubilder `public/og-de.png` / `og-en.png` (1200 × 630) entstehen aus `scripts/og/template.html` mit `node scripts/og/render.mjs`. Nach Text- oder Logo-Änderungen neu erzeugen.
+
 - Zweisprachig: Deutsch unter `/`, Englisch unter `/en/`. Texte in `src/i18n/ui.ts`, Projekttexte in `src/data/projects.ts`, Seiten-Views in `src/views/`. Neue Texte immer in beiden Sprachen.
 - Impressumsdaten nur in `src/data/legal.ts` (gleiche Angaben wie bei Dish Days).
 - Der Buchshop heißt „இnimai Bookshop“ (tamilisches இ zuerst), Instagram: @lnimai_ (kleines L).

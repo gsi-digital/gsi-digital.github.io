@@ -47,7 +47,7 @@ Geprüft: `pnpm lint` ohne Befund, `astro check` mit 0 Fehlern, 0 Warnungen und 
 1. ~~Instagram-Adresse~~ erledigt: `https://www.instagram.com/lnimai_/` (Handle mit kleinem L).
 2. ~~Kontakt-E-Mail~~ erledigt: `gsidigi@gmail.com` für Impressum und Datenschutz. Der Datenschutztext geht von Cloudflare als Hosting aus.
 3. **Domain und Hosting** festlegen und mit `SITE_URL=https://<domain> pnpm build` bauen.
-4. **OG-Bild:** aktuell das quadratische Profilbild aus dem Logo-Kit; besser wäre ein eigenes Bild im Format 1200 × 630 px.
+4. ~~OG-Bild~~ erledigt: `og-de.png` und `og-en.png` (1200 × 630), Vorlage in `scripts/og/`.
 5. **Echte Inhalte (optional):** இnimai-Buchcover unter `src/assets/projects/` ablegen und in `projects.ts` eintragen.
 6. Der Dish-Days-Satz „Eine App von GSI Digital.“ ist eine eigene Ergänzung. Bitte bestätigen oder streichen.
 

@@ -1,0 +1,37 @@
+<!doctype html>
+<!-- Vorlage für die Link-Vorschaubilder (1200 × 630). Erzeugen: node scripts/og/render.mjs -->
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Figtree:wght@500&display=block" rel="stylesheet">
+<style>
+  *{margin:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px}
+  body{background:#FFF5E1;font-family:Figtree,sans-serif;position:relative;overflow:hidden;color:#005951}
+  .mark{position:absolute;right:-70px;bottom:-90px;width:520px;opacity:.07;color:#005951}
+  .left{position:absolute;left:80px;top:0;bottom:18px;width:740px;display:flex;flex-direction:column;justify-content:center;gap:34px}
+  .logo{height:74px;width:auto;align-self:flex-start;margin-left:-6px}
+  .title{font-family:'Bricolage Grotesque';font-weight:800;font-size:128px;line-height:.95;letter-spacing:-.04em}
+  .sub{font-size:31px;color:#2d3f3c;max-width:620px;line-height:1.35;margin-left:4px}
+  .apps{position:absolute;right:96px;top:0;bottom:18px;display:flex;flex-direction:column;justify-content:center;gap:24px}
+  .tile{width:188px;height:188px;border-radius:42px;display:grid;place-items:center;box-shadow:0 24px 40px -22px rgba(0,0,0,.45);overflow:hidden}
+  .tile img{width:100%;height:100%;object-fit:cover}
+  .t2{background:#f3e3c3}
+  .t2 img{width:72%;height:auto;object-fit:contain}
+  .bar{position:absolute;left:0;right:0;bottom:0;height:18px;background:#D6F858}
+</style>
+</head>
+<body>
+  <svg class="mark" viewBox="0 0 100 95" fill="currentColor"><path d="M0 0H73L66 17H18V56H47L40 74H0ZM57 24H100V95H27L35 78H82V41H50Z"/></svg>
+  <div class="left">
+    <img class="logo" src="../../public/brand/quer-petrol.svg" alt="">
+    <h1 class="title">{{TITLE}}</h1>
+    <p class="sub">{{SUB}}</p>
+  </div>
+  <div class="apps">
+    <div class="tile"><img src="../../src/assets/projects/dishdays-icon.png" alt=""></div>
+    <div class="tile t2"><img src="../../src/assets/projects/inimai-logo.png" alt=""></div>
+  </div>
+  <div class="bar"></div>
+</body>
+</html>
