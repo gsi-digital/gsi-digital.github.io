@@ -34,7 +34,7 @@ const headingId = `projekt-${project.id}`;
     }
   </div>
   <div class="visual">
-    {project.look === 'app' && <AppPreview name={project.name} screenshot={project.images?.[0]} alt={project.imageAlt?.[lang]} />}
+    {project.look === 'app' && <AppPreview name={project.name} screenshot={project.screenshot?.[lang]} alt={project.imageAlt?.[lang]} />}
     {project.look === 'books' && <BookShelf covers={project.images} logo={project.logo} logoAlt={lang === 'de' ? `Logo von ${project.name}` : `${project.name} logo`} />}
   </div>
 </article>

@@ -1,5 +1,6 @@
+import dishdaysDiaryDe from '../assets/projects/dishdays-diary-de.webp';
+import dishdaysDiaryEn from '../assets/projects/dishdays-diary-en.webp';
 import dishdaysIcon from '../assets/projects/dishdays-icon.png';
-import dishdaysScreen from '../assets/projects/dishdays-screen.png';
 import inimaiLogo from '../assets/projects/inimai-logo.png';
 import type { Lang } from '../i18n/ui';
 
@@ -27,7 +28,9 @@ export interface Project {
   icon?: ImageMetadata;
   /** Großes Logo als Bild, solange keine Screenshots/Cover vorliegen. */
   logo?: ImageMetadata;
-  /** App: Screenshots. Bücher: Cover (bis zu drei). */
+  /** App: Screenshot je Sprache. */
+  screenshot?: Record<Lang, ImageMetadata>;
+  /** Bücher: Cover (bis zu drei). */
   images?: ImageMetadata[];
   imageAlt?: Localized;
 }
@@ -42,10 +45,10 @@ export const projects: Project[] = [
     cta: { de: 'Zur App', en: 'Visit the app' },
     look: 'app',
     icon: dishdaysIcon,
-    images: [dishdaysScreen],
+    screenshot: { de: dishdaysDiaryDe, en: dishdaysDiaryEn },
     imageAlt: {
-      de: 'Das Tagebuch in der Dish Days App',
-      en: 'The cooking diary in the Dish Days app',
+      de: 'Das Tagebuch in der Dish Days App mit gekochten Gerichten aus November und Oktober',
+      en: 'The diary in the Dish Days app with dishes cooked in November and October',
     },
   },
   {
