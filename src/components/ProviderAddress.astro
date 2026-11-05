@@ -1,0 +1,16 @@
+---
+import { provider } from '../data/legal';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+<address>
+  {provider.person}<br />
+  {provider.business}<br />
+  {provider.street}<br />
+  {provider.city}<br />
+  {provider.country[lang]}
+</address>

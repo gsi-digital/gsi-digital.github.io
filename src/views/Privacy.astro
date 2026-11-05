@@ -1,0 +1,111 @@
+---
+import Prose from '../components/Prose.astro';
+import { provider } from '../data/legal';
+import { type Lang, routes } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const mail = `mailto:${provider.privacyEmail}`;
+const who = `${provider.person} (${provider.business}), ${provider.street}, ${provider.city}`;
+// Hosting: GitHub Pages. Bei Umzug (z. B. Cloudflare) diesen Abschnitt anpassen.
+---
+{
+  lang === 'de' ? (
+    <Base lang="de" title="Datenschutz" noindex>
+      <Prose title="Datenschutzerklärung">
+        <h2>1. Verantwortlicher</h2>
+        <p>
+          {who}, {provider.country.de}
+          <br />
+          E-Mail: <a href={mail}>{provider.privacyEmail}</a>
+        </p>
+        <h2>2. Hosting</h2>
+        <p>
+          Diese Website wird über GitHub Pages bereitgestellt, einen Dienst der GitHub, Inc., 88
+          Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Beim Aufruf verarbeitet GitHub
+          technisch notwendige Verbindungs- und Protokolldaten, insbesondere IP-Adresse, Zeitpunkt
+          und angeforderte Datei, um die Website auszuliefern und vor Missbrauch zu schützen. Dabei
+          können Daten in die USA übermittelt werden; GitHub ist nach dem EU-US Data Privacy
+          Framework zertifiziert. Rechtsgrundlage ist unser berechtigtes Interesse an einer sicheren
+          und funktionsfähigen Website (Art. 6 Abs. 1 lit. f DSGVO). Weitere Informationen:{' '}
+          <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">
+            Datenschutzerklärung von GitHub
+          </a>
+          .
+        </p>
+        <h2>3. Keine Cookies, kein Tracking</h2>
+        <p>
+          Diese Website setzt keine Cookies, verwendet keine Analyse- oder Tracking-Werkzeuge und lädt
+          keine Inhalte von Drittanbietern. Schriften und Bilder werden über unsere eigene Website
+          ausgeliefert.
+        </p>
+        <h2>4. Links zu unseren Projekten</h2>
+        <p>
+          Diese Website verlinkt auf Dish Days und auf Instagram. Erst wenn du einem Link folgst,
+          gelten die Datenschutzhinweise des jeweiligen Angebots.
+        </p>
+        <h2>5. Deine Rechte</h2>
+        <p>
+          Du hast insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung,
+          Datenübertragbarkeit und Widerspruch. Außerdem kannst du dich bei einer
+          Datenschutzaufsichtsbehörde beschweren, etwa beim Landesbeauftragten für Datenschutz und
+          Informationsfreiheit Baden-Württemberg.
+        </p>
+        <p>
+          Anfragen kannst du an <a href={mail}>{provider.privacyEmail}</a> richten. Weitere Angaben
+          findest du im <a href={routes.imprint.de}>Impressum</a>.
+        </p>
+        <p>Stand: 5. November 2026</p>
+      </Prose>
+    </Base>
+  ) : (
+    <Base lang="en" title="Privacy" noindex>
+      <Prose title="Privacy policy">
+        <h2>1. Controller</h2>
+        <p>
+          {who}, {provider.country.en}
+          <br />
+          Email: <a href={mail}>{provider.privacyEmail}</a>
+        </p>
+        <h2>2. Hosting</h2>
+        <p>
+          This website is served through GitHub Pages, a service of GitHub, Inc., 88 Colin P. Kelly
+          Jr. Street, San Francisco, CA 94107, USA. When you visit it, GitHub processes technically
+          necessary connection and log data, in particular IP address, time and requested file, to
+          deliver the site and protect it against abuse. Data may be transferred to the USA; GitHub
+          is certified under the EU-US Data Privacy Framework. The legal basis is our legitimate
+          interest in a secure and working website (Art. 6(1)(f) GDPR). More information:{' '}
+          <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">
+            GitHub privacy statement
+          </a>
+          .
+        </p>
+        <h2>3. No cookies, no tracking</h2>
+        <p>
+          This website sets no cookies, uses no analytics or tracking tools and loads no third-party
+          content. Fonts and images are served from our own website.
+        </p>
+        <h2>4. Links to our projects</h2>
+        <p>
+          This website links to Dish Days and to Instagram. Once you follow a link, the privacy
+          notice of that service applies.
+        </p>
+        <h2>5. Your rights</h2>
+        <p>
+          You have the right of access, rectification, erasure, restriction, data portability and
+          objection. You can also lodge a complaint with a data protection supervisory authority,
+          for example the State Commissioner for Data Protection and Freedom of Information
+          Baden-Württemberg.
+        </p>
+        <p>
+          Please send requests to <a href={mail}>{provider.privacyEmail}</a>. See also the{' '}
+          <a href={routes.imprint.en}>imprint</a>.
+        </p>
+        <p>Last updated: 5 November 2026</p>
+      </Prose>
+    </Base>
+  )
+}

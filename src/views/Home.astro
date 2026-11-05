@@ -1,0 +1,92 @@
+---
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
+import { type Lang, t } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+<Base lang={lang}>
+  <section class="wrap intro" aria-labelledby="titel">
+    <p class="eyebrow">{t(lang, 'home.eyebrow')}</p>
+    <h1 id="titel">{t(lang, 'home.title')}</h1>
+    <p class="sub">{t(lang, 'home.intro')}</p>
+  </section>
+
+  <section id="projekte" class="wrap projects" aria-label={t(lang, 'home.projects')}>
+    {projects.map((project, index) => <ProjectCard project={project} index={index} lang={lang} />)}
+  </section>
+
+  <section id="ueber" class="wrap" aria-labelledby="ueber-titel">
+    <div class="about">
+      <h2 id="ueber-titel">{t(lang, 'about.title')}</h2>
+      <p>{t(lang, 'about.text')}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro {
+    padding-block: clamp(1.25rem, 4vw, 2.5rem) 1.75rem;
+  }
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-petrol);
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 9vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--color-petrol);
+    text-wrap: balance;
+  }
+  .sub {
+    max-width: 32ch;
+    margin: 1rem 0 0;
+    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    color: var(--color-ink-soft);
+    text-wrap: pretty;
+  }
+  .projects {
+    display: grid;
+    gap: 1.1rem;
+    padding-bottom: clamp(2.5rem, 7vw, 4.5rem);
+  }
+  .about {
+    display: grid;
+    gap: 0.75rem 2rem;
+    padding-block: 2.5rem 4rem;
+    border-top: 1.5px solid rgb(0 89 81 / 0.15);
+  }
+  @media (min-width: 44rem) {
+    .about {
+      grid-template-columns: auto 1fr;
+      align-items: start;
+    }
+  }
+  .about h2 {
+    margin: 0;
+    max-width: 8ch;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.9rem;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--color-petrol);
+  }
+  .about p {
+    max-width: 46ch;
+    margin: 0;
+    color: var(--color-ink-soft);
+  }
+</style>

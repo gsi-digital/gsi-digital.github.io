@@ -1,0 +1,105 @@
+---
+import { type Lang, otherLang, routeKeyFromPath, routes, t } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const home = routes.home[lang];
+const target = otherLang(lang);
+const switchHref = routes[routeKeyFromPath(Astro.url.pathname) ?? 'home'][target];
+---
+<header class="wrap header">
+  <a href={home} class="brand" aria-label={t(lang, 'nav.home')}>
+    <img src="/brand/quer-petrol.svg" alt="" width="446" height="132" />
+  </a>
+  <nav aria-label={t(lang, 'nav.label')}>
+    <ul>
+      <li><a href={`${home}#projekte`}>{t(lang, 'nav.projects')}</a></li>
+      <li><a href={`${home}#ueber`}>{t(lang, 'nav.about')}</a></li>
+      <li>
+        <a class="lang" href={switchHref} hreflang={target} lang={target} aria-label={t(lang, 'lang.switch')}>
+          {t(lang, 'lang.switchShort')}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.1rem;
+  }
+  .brand img {
+    display: block;
+    height: 2.5rem;
+    width: auto;
+    /* Das Logo-SVG hat links etwas Weißraum eingebaut. */
+    margin-left: -0.3rem;
+  }
+  ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.9rem, 3vw, 1.5rem);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  nav a {
+    position: relative;
+    display: inline-block;
+    padding: 0.6rem 0; /* großzügige Tippfläche */
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  nav a:not(.lang)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0.35rem;
+    height: 2px;
+    background: var(--color-petrol);
+    transition: right 0.25s ease;
+  }
+  nav a:hover::after,
+  nav a:focus-visible::after {
+    right: 0;
+  }
+  .lang {
+    min-width: 2.75rem;
+    padding: 0.45rem 0.7rem;
+    border: 1.5px solid rgb(0 89 81 / 0.3);
+    border-radius: 999px;
+    color: var(--color-petrol);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-align: center;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+  .lang:hover {
+    background: var(--color-petrol);
+    color: var(--color-creme);
+  }
+  nav a {
+    white-space: nowrap;
+  }
+  /* Auf schmalen Handys: „Über GSI“ ausblenden, steht ohnehin direkt unter den Projekten. */
+  @media (max-width: 27rem) {
+    li:nth-child(2) {
+      display: none;
+    }
+    .brand img {
+      height: 2.2rem;
+    }
+  }
+</style>

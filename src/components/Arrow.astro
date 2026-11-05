@@ -1,0 +1,10 @@
+---
+// Linkpfeil. Das hintere Ende ist schräg geschnitten wie die Enden der GSI-Klammern.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+<svg class={className} viewBox="0 0 22 12" fill="currentColor" aria-hidden="true" focusable="false">
+  <path d="M2 4.5H15L12 0H16L22 6L16 12H12L15 7.5H0Z"></path>
+</svg>

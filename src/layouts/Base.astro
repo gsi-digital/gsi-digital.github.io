@@ -1,0 +1,103 @@
+---
+import { Font } from 'astro:assets';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { type Lang, languages, routeKeyFromPath, routes, t } from '../i18n/ui';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** Rechtstexte o. Ä. nicht in Suchmaschinen. */
+  noindex?: boolean;
+}
+const { lang, title, noindex = false } = Astro.props;
+const description = Astro.props.description ?? t(lang, 'meta.description');
+const siteName = 'GSI Digital';
+const pageTitle = title ? `${title} – ${siteName}` : t(lang, 'meta.title');
+const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : undefined);
+const canonical = abs(Astro.url.pathname);
+const ogImage = abs('/og-image.png');
+const routeKey = routeKeyFromPath(Astro.url.pathname);
+const alternates = routeKey
+  ? (Object.keys(languages) as Lang[]).map((l) => ({ lang: l, href: abs(routes[routeKey][l]) }))
+  : [];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteName,
+  ...(Astro.site && { url: Astro.site.href, logo: new URL('/brand/zeichen-petrol.svg', Astro.site).href }),
+};
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex" />}
+    {alternates.map((a) => a.href && <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    {routeKey && abs(routes[routeKey].de) && <link rel="alternate" hreflang="x-default" href={abs(routes[routeKey].de)} />}
+    <meta name="theme-color" content="#005951" />
+    <meta name="color-scheme" content="light" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary" />
+
+    <Font cssVariable="--font-gsi-display" preload />
+    <Font cssVariable="--font-gsi-body" preload />
+    <Font cssVariable="--font-gsi-book" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#inhalt">{t(lang, 'skip')}</a>
+    <Header lang={lang} />
+    <main id="inhalt">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    flex: 1;
+  }
+  .skip {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 10;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    background: var(--color-petrol);
+    color: var(--color-creme);
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-200%);
+  }
+  .skip:focus {
+    transform: none;
+  }
+</style>

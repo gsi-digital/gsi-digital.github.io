@@ -1,0 +1,51 @@
+---
+import Prose from '../components/Prose.astro';
+import ProviderAddress from '../components/ProviderAddress.astro';
+import { provider } from '../data/legal';
+import type { Lang } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const mail = `mailto:${provider.email}`;
+---
+{
+  lang === 'de' ? (
+    <Base lang="de" title="Impressum" noindex>
+      <Prose title="Impressum">
+        <p>Angaben gemäß § 5 DDG</p>
+        <h2>Anbieter und verantwortlich für den Inhalt</h2>
+        <ProviderAddress lang="de" />
+        <h2>Kontakt</h2>
+        <p>
+          E-Mail: <a href={mail}>{provider.email}</a>
+        </p>
+        <h2>Umsatzsteuer-ID</h2>
+        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: {provider.vatId}</p>
+        <h2>Verbraucherstreitbeilegung</h2>
+        <p>
+          Ich bin nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+          Verbraucherschlichtungsstelle teilzunehmen.
+        </p>
+      </Prose>
+    </Base>
+  ) : (
+    <Base lang="en" title="Imprint" noindex>
+      <Prose title="Imprint">
+        <p>Information according to § 5 DDG (German Digital Services Act).</p>
+        <h2>Provider and content responsibility</h2>
+        <ProviderAddress lang="en" />
+        <h2>Contact</h2>
+        <p>
+          Email: <a href={mail}>{provider.email}</a>
+        </p>
+        <h2>VAT ID</h2>
+        <p>VAT identification number according to § 27 a of the German VAT Act: {provider.vatId}</p>
+        <h2>Consumer dispute resolution</h2>
+        <p>I am not willing or obliged to participate in dispute resolution proceedings.</p>
+      </Prose>
+    </Base>
+  )
+}

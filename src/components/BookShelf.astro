@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets';
+
+// Bücherregal mit echten Covern. Ohne Cover: das Logo, sonst drei gestaltete Platzhalter.
+interface Props {
+  covers?: ImageMetadata[];
+  logo?: ImageMetadata;
+  logoAlt?: string;
+}
+const { covers = [], logo, logoAlt = '' } = Astro.props;
+const placeholders = ['அ', 'ஆ', 'இ'];
+---
+{
+  !covers.length && logo ? (
+    <div class="logo-stage">
+      <Image class="logo" src={logo} alt={logoAlt} widths={[200, 320, 480]} sizes="(min-width: 44rem) 240px, 180px" />
+    </div>
+  ) : (
+<div class="shelf" aria-hidden={covers.length ? undefined : 'true'}>
+  {
+    covers.length
+      ? covers.slice(0, 3).map((cover, i) => (
+          <Image class={`cover cover-${i + 1}`} src={cover} alt="Buchcover" widths={[120, 240]} sizes="112px" />
+        ))
+      : placeholders.map((letter, i) => (
+          <span class={`cover cover-${i + 1}`} lang="ta">{letter}</span>
+        ))
+  }
+</div>
+  )
+}
+
+<style>
+  .logo-stage {
+    display: grid;
+    place-items: center;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+  }
+  .logo-stage :global(.logo) {
+    width: clamp(9rem, 32vw, 14rem);
+    height: auto;
+    filter: drop-shadow(0 10px 18px rgb(59 36 23 / 0.12));
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  :global(.card:hover) .logo-stage :global(.logo) {
+    transform: translateY(-4px) rotate(-1.5deg);
+  }
+  .shelf {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(0.4rem, 2vw, 0.75rem);
+    min-height: 13rem;
+    padding: 1.5rem 1.5rem 0;
+  }
+  .shelf::after {
+    content: '';
+    position: absolute;
+    inset-inline: 1.1rem;
+    bottom: 0;
+    height: 0.75rem;
+    border-radius: 3px 3px 0 0;
+    background: #8a5a3a;
+  }
+  .cover {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    width: clamp(4.6rem, 22vw, 6rem);
+    aspect-ratio: 3 / 4.2;
+    margin-bottom: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 3px 8px 8px 3px;
+    box-shadow:
+      inset 6px 0 0 rgb(0 0 0 / 0.12),
+      0 14px 22px -12px rgb(59 36 23 / 0.6);
+    color: rgb(255 255 255 / 0.92);
+    font-size: 0.8rem;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  span.cover::before {
+    content: '';
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.28);
+  }
+  .cover-1 {
+    background: #d8643a;
+    transform: rotate(-6deg) translateY(4px);
+  }
+  .cover-2 {
+    z-index: 1;
+    width: clamp(5.4rem, 26vw, 7rem);
+    background: var(--color-petrol);
+  }
+  .cover-3 {
+    background: #e6a93a;
+    color: var(--color-bark);
+    transform: rotate(5deg) translateY(6px);
+  }
+  :global(.card:hover) .cover-1 {
+    transform: rotate(-9deg) translate(-4px, 2px);
+  }
+  :global(.card:hover) .cover-3 {
+    transform: rotate(8deg) translate(4px, 4px);
+  }
+</style>

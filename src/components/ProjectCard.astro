@@ -1,0 +1,190 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../data/projects';
+import type { Lang } from '../i18n/ui';
+import AppPreview from './AppPreview.astro';
+import Arrow from './Arrow.astro';
+import BookShelf from './BookShelf.astro';
+
+interface Props {
+  project: Project;
+  index: number;
+  lang: Lang;
+}
+const { project, index, lang } = Astro.props;
+const headingId = `projekt-${project.id}`;
+---
+<article class:list={['card', `look-${project.look}`]} aria-labelledby={headingId} style={`--i:${index}`}>
+  <div class="text">
+    <div>
+      <div class="head">
+        {project.icon && <Image class="icon" src={project.icon} alt="" width={56} height={56} densities={[1, 2]} />}
+        <p class="kind">{project.kind[lang]}</p>
+      </div>
+      <h2 id={headingId}>{project.name}</h2>
+      {project.description && <p class="lead">{project.description[lang]}</p>}
+    </div>
+    {
+      project.url && (
+        <a class="btn" href={project.url} rel="noopener">
+          {project.cta[lang]}
+          <Arrow class="btn-arrow" />
+        </a>
+      )
+    }
+  </div>
+  <div class="visual">
+    {project.look === 'app' && <AppPreview name={project.name} screenshot={project.images?.[0]} alt={project.imageAlt?.[lang]} />}
+    {project.look === 'books' && <BookShelf covers={project.images} logo={project.logo} logoAlt={lang === 'de' ? `Logo von ${project.name}` : `${project.name} logo`} />}
+  </div>
+</article>
+
+<style>
+  .card {
+    display: grid;
+    overflow: hidden;
+    border-radius: 1.6rem;
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 120ms);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+  }
+  @media (min-width: 44rem) {
+    .card {
+      grid-template-columns: 1.05fr 0.95fr;
+      min-height: 21rem;
+    }
+    .look-books {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+    .look-books .text {
+      order: 2;
+    }
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 4vw, 2rem);
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .head :global(.icon) {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.65rem;
+    box-shadow: 0 6px 16px -8px rgb(0 0 0 / 0.5);
+  }
+  .kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .kind::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 2px;
+    background: currentColor;
+    transform: skewX(-20deg);
+  }
+  h2 {
+    margin: 0.6rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.1rem, 5vw, 2.75rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .lead {
+    max-width: 28ch;
+    margin: 0.75rem 0 0;
+  }
+  .btn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding: 0.8rem 1.1rem 0.8rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  .btn :global(.btn-arrow) {
+    width: 1.35rem;
+    height: 0.75rem;
+    transition: transform 0.25s ease;
+  }
+  .btn:hover :global(.btn-arrow) {
+    transform: translateX(4px);
+  }
+
+  .visual {
+    display: grid;
+  }
+
+  /* App */
+  .look-app {
+    background: var(--color-petrol);
+    color: var(--color-creme);
+  }
+  .look-app .kind {
+    color: var(--color-lime);
+  }
+  .look-app .btn {
+    background: var(--color-lime);
+    color: var(--color-anthra);
+  }
+  .look-app .btn:hover {
+    box-shadow: 0 8px 24px -8px rgb(214 248 88 / 0.6);
+  }
+  .look-app :focus-visible {
+    outline-color: var(--color-lime);
+  }
+
+  /* Bücher */
+  .look-books {
+    background-color: var(--color-paper);
+    background-image: radial-gradient(#e7cf9f 1px, transparent 1.2px);
+    background-size: 14px 14px;
+    color: var(--color-bark);
+  }
+  .look-books .kind {
+    color: var(--color-rust);
+  }
+  .look-books h2 {
+    font-family: var(--font-book);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.3rem, 5.4vw, 3.1rem);
+    letter-spacing: -0.01em;
+  }
+  .look-books .btn {
+    background: var(--color-bark);
+    color: var(--color-creme);
+  }
+  .look-books .btn:hover {
+    box-shadow: 0 8px 24px -10px rgb(59 36 23 / 0.6);
+  }
+</style>

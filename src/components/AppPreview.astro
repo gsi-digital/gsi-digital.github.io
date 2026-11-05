@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+
+// App-Vorschau im Handyrahmen. Mit Screenshot: echtes Bild; sonst steht der Name im Mittelpunkt.
+interface Props {
+  name: string;
+  screenshot?: ImageMetadata;
+  alt?: string;
+}
+const { name, screenshot, alt = name } = Astro.props;
+---
+<div class="stage" aria-hidden={screenshot ? undefined : 'true'}>
+  <div class="phone">
+    <div class:list={['screen', { shot: screenshot }]}>
+      {
+        screenshot ? (
+          <Image src={screenshot} alt={alt} widths={[240, 400, 600]} sizes="(min-width: 44rem) 200px, 160px" />
+        ) : (
+          <span class="word">{name}</span>
+        )
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    align-items: start;
+    height: 15rem;
+    padding: 1.75rem 1.25rem 0;
+    overflow: hidden;
+    background: radial-gradient(90% 70% at 65% 10%, rgb(214 248 88 / 0.16), transparent 70%);
+  }
+  @media (min-width: 44rem) {
+    .stage {
+      align-items: end;
+      height: 100%;
+      min-height: 21rem;
+    }
+    .phone {
+      margin-bottom: -3rem;
+    }
+  }
+  .phone {
+    width: clamp(9.5rem, 28vw, 12.5rem);
+    aspect-ratio: 9 / 18.5;
+    padding: 0.55rem;
+    border-radius: 2.1rem;
+    background: var(--color-anthra);
+    box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.55);
+    transform: rotate(-4deg);
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  :global(.card:hover) .phone {
+    transform: rotate(-2deg) translateY(-6px);
+  }
+  .screen {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 1.6rem;
+    background: var(--color-creme);
+  }
+  .screen:not(.shot)::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    z-index: 1;
+    width: 3.6rem;
+    height: 1rem;
+    border-radius: 1rem;
+    background: var(--color-anthra);
+    transform: translateX(-50%);
+  }
+  .screen :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .word {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.45rem, 4.4vw, 2rem);
+    letter-spacing: -0.04em;
+    color: var(--color-petrol);
+  }
+</style>

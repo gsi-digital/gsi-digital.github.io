@@ -1,0 +1,11 @@
+---
+import Prose from '../components/Prose.astro';
+import { t } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+---
+<Base lang="de" title={t('de', 'notFound.title')} noindex>
+  <Prose title={t('de', 'notFound.title')}>
+    <p>{t('de', 'notFound.text')} <a href="/">{t('de', 'notFound.back')}</a></p>
+    <p lang="en">{t('en', 'notFound.text')} <a href="/en/">{t('en', 'notFound.back')}</a></p>
+  </Prose>
+</Base>

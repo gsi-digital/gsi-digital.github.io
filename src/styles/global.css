@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-petrol: #005951;
+  --color-petrol-deep: #004a43;
+  --color-creme: #fff5e1;
+  --color-lime: #d6f858;
+  --color-anthra: #202222;
+  --color-ink: #1d2b29;
+  --color-ink-soft: #2d3f3c;
+  --color-paper: #f3e3c3;
+  --color-bark: #3b2417;
+  --color-rust: #9c4119;
+}
+
+/* Schriften kommen aus der Astro-Fonts-API (astro.config.mjs). */
+@theme inline {
+  --font-display: var(--font-gsi-display);
+  --font-sans: var(--font-gsi-body);
+  --font-book: var(--font-gsi-book);
+}
+
+@layer base {
+  html {
+    background: var(--color-creme);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 106.25%; /* 17px – gut lesbar auf dem Handy */
+    line-height: 1.55;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: 1rem;
+  }
+
+  ::selection {
+    background: var(--color-lime);
+    color: var(--color-anthra);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-petrol);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+}

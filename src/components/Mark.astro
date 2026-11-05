@@ -1,0 +1,10 @@
+---
+// GSI-Zeichen (aus dem Logo-Kit, zeichen-*.svg). Rein dekorativ.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+<svg class={className} viewBox="0 0 100 95" fill="currentColor" aria-hidden="true" focusable="false">
+  <path d="M0 0H73L66 17H18V56H47L40 74H0ZM57 24H100V95H27L35 78H82V41H50Z"></path>
+</svg>
