@@ -29,7 +29,7 @@ export const ui = {
     'about.title': 'Über GSI Digital',
     'about.text':
       'GSI Digital ist das gemeinsame Zuhause unserer Projekte. Hier entstehen Apps und Angebote, die wir selbst entwickeln und betreuen.',
-    'footer.tagline': 'Dachmarke für eigene Projekte',
+    'footer.tagline': 'Das Zuhause unserer Projekte',
     'footer.projects': 'Projekte',
     'footer.imprint': 'Impressum',
     'footer.privacy': 'Datenschutz',
@@ -55,7 +55,7 @@ export const ui = {
     'about.title': 'About GSI Digital',
     'about.text':
       'GSI Digital is the shared home of our projects. This is where we build apps and offerings that we develop and run ourselves.',
-    'footer.tagline': 'The umbrella brand for our own projects',
+    'footer.tagline': 'The home of our projects',
     'footer.projects': 'Projects',
     'footer.imprint': 'Imprint',
     'footer.privacy': 'Privacy',
